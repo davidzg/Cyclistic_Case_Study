@@ -7,7 +7,6 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-#setwd("C:/Users/david/Documents/Cyclistic_Case_Study")
 library(readr)
 library(tidyverse)
 library(dplyr)
@@ -68,6 +67,11 @@ If you're running this notebook on your own machine and **don't have the origina
 library(here)
 data <- read.csv(here("data", "reduced_data.csv"))
 ```
+```{r load-reduced-data, eval=FALSE}
+data$started_at = ymd_hms(data$started_at)
+data$ended_at = ymd_hms(data$ended_at)
+glimpse(data)
+```
 
 ## 🛠 **Process**
 
@@ -83,8 +87,11 @@ data <- combined_data %>%
          start_station_name,
          end_station_name,
          member_casual)
+```
+
+```{r write reduced data, eval=FALSE, warning=FALSE, include=FALSE}
 # Write to CSV
-write.csv(data, file = "combined_data.csv", row.names = FALSE)
+write.csv(data, file = "reduced_data.csv", row.names = FALSE)
 ```
 
 ### **Formatting data**
