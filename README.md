@@ -8,3 +8,6 @@ The file Cyclistic.html is the output file, that display and present the project
 ### 📄 View the Project
 
 - [View the knitted HTML output](Cyclistic.html)
+
+### If using the reduced dataset
+Download the Zip file and extract the csv file before imprting the dataset into the project
