@@ -2,7 +2,8 @@
 title: "Case Study - Cyclistic"
 author: "David Zapata"
 date: "2024-03-23"
-output: html_document
+output:
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -63,11 +64,9 @@ The resulting dataframe is too big to be loaded into a spreadsheet (rows). This 
 
 If you're running this notebook on your own machine and **don't have the original raw CSV files**, you can skip the data processing steps and load the reduced dataset directly:
 
-```{r load-reduced-data, eval=FALSE}
+```{r load-reduced-data, eval=FALSE, include=FALSE}
 library(here)
 data <- read.csv(here("data", "reduced_data.csv"))
-```
-```{r load-reduced-data, eval=FALSE}
 data$started_at = ymd_hms(data$started_at)
 data$ended_at = ymd_hms(data$ended_at)
 glimpse(data)
@@ -90,7 +89,7 @@ data <- combined_data %>%
 ```
 
 ```{r write reduced data, eval=FALSE, warning=FALSE, include=FALSE}
-# Write to CSV
+# Write to CSV for use without the source raw csv files
 write.csv(data, file = "reduced_data.csv", row.names = FALSE)
 ```
 
@@ -137,7 +136,7 @@ data %>% skim_without_charts() %>%
 
 Columns <span style="color: blue;">**`start_station_name`**</span> and <span style="color: blue;">**`end_station_name`**</span> have missing values. 
 
-Exploring columns: <span style="color: blue;">**`start_station_name`**</span>,
+Exploring columns in the original dataset **`combined_data`**: <span style="color: blue;">**`start_station_name`**</span>,
 <span style="color: blue;">**`start_station_id`**</span>,
 <span style="color: blue;">**` start_lat`**</span>, 
 <span style="color: blue;">**`start_lng`**</span>, and filtering the rows with missing values will give a better perspective:
@@ -246,7 +245,7 @@ head(rides_per_month_pivot)
 
 
 ## 📢 **Share**
-```{r ggplot, warning=FALSE}
+```{r ggplot1, warning=FALSE}
 
 #### Number of rides per user type ####
 ggplot(data=rides_per_user_pivot)+
@@ -260,7 +259,7 @@ ggplot(data=rides_per_user_pivot)+
        y = "Number of rides", x = "User type", fill = "User Type")
 ```
 
-```{r ggplot, warning=FALSE}
+```{r ggplot2, warning=FALSE}
 #### Average ride length per user type ####
 ggplot(data=rides_per_user_pivot)+
   geom_col(mapping = aes(x = member_casual, y = average_duration, fill = member_casual), position = position_dodge())+
@@ -274,7 +273,7 @@ ggplot(data=rides_per_user_pivot)+
        fill = "User Type")
 ```
 
-```{r ggplot, warning=FALSE}
+```{r ggplot3, warning=FALSE}
 #### Number of rides per bike type per user type ####
 ggplot(data = rides_per_rideable_pivot)+
   geom_col(mapping = aes(x = rideable_type, y = number_of_rides, fill = member_casual), position = position_dodge()) +
@@ -286,7 +285,7 @@ ggplot(data = rides_per_rideable_pivot)+
        fill = "User Type")
 ```
 
-```{r ggplot, warning=FALSE}
+```{r ggplot4, warning=FALSE}
 #### Number of rides per day of the week per user type ####
 ggplot(rides_per_wday_pivot, aes(x = day_of_the_week, y = number_of_rides, fill = member_casual)) +
   geom_col(position = "dodge")+ 
@@ -298,7 +297,7 @@ ggplot(rides_per_wday_pivot, aes(x = day_of_the_week, y = number_of_rides, fill 
        fill = "User Type")
 ```
 
-```{r ggplot, warning=FALSE}
+```{r ggplot5, warning=FALSE}
 #### Average ride length per day of the week per user type ####  
 ggplot(rides_per_wday_pivot, aes(x = day_of_the_week, y = average_duration, fill = member_casual)) +
   geom_col(position = "dodge") +
@@ -310,7 +309,7 @@ ggplot(rides_per_wday_pivot, aes(x = day_of_the_week, y = average_duration, fill
        fill = "User Type")
 ```
 
-```{r ggplot, warning=FALSE}
+```{r ggplot6, warning=FALSE}
 #### Number of rides per month per user type ####  
 ggplot(data = rides_per_month_pivot)+
   geom_col(mapping = aes(x = month, y = number_of_rides, fill = member_casual), position = position_dodge())+
@@ -319,7 +318,7 @@ ggplot(data = rides_per_month_pivot)+
        x = "Month", 
        fill = "User Type")
 ```
-```{r ggplot, warning=FALSE}
+```{r ggplot7, warning=FALSE}
 #### Average ride length per day of the week per user type ####   
 ggplot(rides_per_month_pivot, aes(x = month, y = average_duration, fill = member_casual)) +
   geom_col(position = "dodge") +
