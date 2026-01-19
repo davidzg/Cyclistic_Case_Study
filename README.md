@@ -4,44 +4,63 @@
 ---
 
 ## Executive Summary
-Cyclistic's long-term profitability depends on transitioning "Casual" riders into "Annual Members." By analyzing 12 months of historical trip data (approx. 5.5M+ records), this project identifies key behavioral pivots. The most significant finding: Casual riders average **29.41 minutes** per trip—over 2x the duration of Members—presenting a massive opportunity for value-based conversion.
+Cyclistic's long-term profitability depends on transitioning "Casual" riders into "Annual Members." By analyzing 12 months of historical trip data (approx. 5.5M+ records), this project identifies key behavioral pivots.
+
+The most significant finding: Casual riders average **29.41 minutes** per trip—over 2x the duration of Members—presenting a massive opportunity for value-based conversion.
 
 ![Avg Ride Length vs User Type](./visualizations/000011.png)
 
 ---
 
-## Strategic Business Insights
+## Insights
 
 ### 1. The "Leisure vs. Utility" Divergence
 The analysis reveals a fundamental difference in user intent. Members ride for utility (consistent ~13-minute trips), while Casual users ride for leisure, peaking at nearly 30 minutes. 
 * **Member Pattern:** Highly consistent weekday usage, suggesting a reliance on the service for commuting.
 * **Casual Pattern:** High-duration trips that suggest exploration, tourism, and recreation.
 
-### 2. High-Intent Windows: The Weekend Peak
-![Number of rides vs. Day of the week](./visualizations/000013.png)
-Casual usage significantly outperforms member growth trends on **Saturdays and Sundays**. This indicates that the most effective window for conversion is the weekend, when Casual rider engagement is at its absolute peak.
+### 2. High-Intent Windows
 
-### 3. Hardware Preference: The Electric Advantage
+![Number of rides vs. Day of the week](./visualizations/000013.png)
+
+Casual usage increase on **Saturdays and Sundays**. This is the "high-intent" window where casual riders are most active and likely to see the value of a membership for their weekend leisure activities, even if they aren't yet using it for a weekday commute.
+
+### 3. Peak Season
+![Number of rides vs. Month](./visualizations/000015.png)
+Usage for both segments follows a strong seasonal bell curve, peaking from June through August. However, the surge in Casual riders during the summer months is significantly more pronounced.
+
+Casual rider volume nearly triples from March to July. This seasonality defines the "Golden Window" for marketing, as the concentration of potential subscribers is at its highest density.
+
+### 4. Hardware Preference
+
 ![Number of rides vs. Bike type](./visualizations/000012.png)
-The data shows Casual riders have a stronger preference for **Electric Bikes** compared to the Member segment. Leveraging the premium appeal of the electric fleet could be a primary lever for subscription upgrades.
+
+Usage across bike types is relatively balanced for both segments, with subtle preferences emerging:
+* **Casual Riders:** Show a slight preference for Electric Bikes over Classic Bikes.
+* **Annual Members:** Lean slightly more toward Classic Bikes.
+
+Because both segments utilize both bike types significantly, marketing should focus on the cost-savings of membership regardless of hardware choice, rather than hardware exclusivity.
+
+---
+
+## Recommendations
+
+* **Weekend Conversion:** Launch digital ad-buys specifically on weekends, targeting users who take multiple trips on Saturdays/Sundays with "Introductory Annual Rates."
+* **Cost-Per-Minute Marketing:** Create a campaign highlighting that for rides over 20 minutes (the Casual average), an annual membership is significantly more cost-effective than single-trip pricing.
+* **Seasonal Aggression:** Focus 60% of the marketing budget on the **Summer** months, as usage data shows this is the highest acquisition window for both segments.
+
 
 ---
 
 ##  Technical Methodology
+
 I utilized a robust R-based pipeline to process the massive scale of the Divvy dataset:
+
 * **Libraries:** `tidyverse` (dplyr, ggplot2), `skimr` (distribution analysis), `DescTools` (statistical profiling), and `pivottabler` (business-grade reporting).
-* **Data Pipeline:** * Consistently merged 12 individual CSV files into a unified dataframe.
+
+* **Data Pipeline:** * Consistently merged 12 individual CSV files into a unified dataframe (approx. 5.5M+ records).
     * Executed data validation to remove negative trip durations and maintenance pings.
     * Engineered temporal features (Season, Day of Week, Month) to isolate seasonality trends.
-
----
-
-## The Growth Roadmap (Recommendations)
-
-* **Weekend Warrior Conversion:** Launch digital ad-buys specifically on weekends, targeting users who take multiple trips on Saturdays/Sundays with "Introductory Annual Rates."
-* **Cost-Per-Minute Marketing:** Create a campaign highlighting that for rides over 20 minutes (the Casual average), an annual membership is significantly more cost-effective than single-trip pricing.
-* **Electric Bike Incentives:** Introduce "Member-Only" discounts or priority access for the Electric Bike fleet to convert hardware-motivated Casual riders.
-* **Seasonal Aggression:** Focus 60% of the marketing budget on the **Summer** months, as usage data shows this is the highest acquisition window for both segments.
 
 ---
 
