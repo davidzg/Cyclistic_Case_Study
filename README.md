@@ -1,53 +1,58 @@
-# Cyclistic_Case_Study
+# Optimizing Subscription Growth: Data-Driven Strategies for Cyclistic
+**A Case Study in Converting Casual Riders through Behavioral Analysis (March 2023 – February 2024)**
 
-## Introduction
-This is the final project for the Google Data Analytics Professional Certificate.
+---
 
-This project follows the data analysis process phases:
-- ❓ Ask
-- 🧰️ Prepare
-- 🛠 Process
-- 📢 Share
-- 🚀 Act
+## Executive Summary
+Cyclistic's long-term profitability depends on transitioning "Casual" riders into "Annual Members." By analyzing 12 months of historical trip data (approx. 5.5M+ records), this project identifies key behavioral pivots. The most significant finding: Casual riders average **29.41 minutes** per trip—over 2x the duration of Members—presenting a massive opportunity for value-based conversion.
 
-The project has been developed in R, please refer to the [Rmd file](Cyclistic.Rmd) for more details.
+![Avg Ride Length vs User Type](./visualizations/000011.png)
 
-You can download the [HTML output file](Cyclistic.html) to see the full analysis with results and visualizations.
+---
 
-## Problem description
-The primary objective of this analysis is to determine how casual costumers are using **Cyclistic** (a fictional bike-share company) bikes compared to subscribed members, in order to design a new marketing strategy that will focus on converting casual riders into annual members.
+## Strategic Business Insights
 
-### Data set used for this project
-The [data](https://divvy-tripdata.s3.amazonaws.com/index.html) has been made available by Motivate International Inc. under this [license](https://divvybikes.com/data-license-agreement).
+### 1. The "Leisure vs. Utility" Divergence
+The analysis reveals a fundamental difference in user intent. Members ride for utility (consistent ~13-minute trips), while Casual users ride for leisure, peaking at nearly 30 minutes. 
+* **Member Pattern:** Highly consistent weekday usage, suggesting a reliance on the service for commuting.
+* **Casual Pattern:** High-duration trips that suggest exploration, tourism, and recreation.
 
-You can also use a reduced dataset. you can download the [Zip file](./data/reduced_data.zip) and extract the csv file before imprting the dataset into the project.
+### 2. High-Intent Windows: The Weekend Peak
+![Number of rides vs. Day of the week](./visualizations/000013.png)
+Casual usage significantly outperforms member growth trends on **Saturdays and Sundays**. This indicates that the most effective window for conversion is the weekend, when Casual rider engagement is at its absolute peak.
 
-### Data filed skills displayed
- - Reading multiple files into a single dataset
- - Formating data
- - Cleaning data
- - Filtering data
- - Grouping data
- - Visualising data
+### 3. Hardware Preference: The Electric Advantage
+![Number of rides vs. Bike type](./visualizations/000012.png)
+The data shows Casual riders have a stronger preference for **Electric Bikes** compared to the Member segment. Leveraging the premium appeal of the electric fleet could be a primary lever for subscription upgrades.
 
+---
 
-## Results
+##  Technical Methodology
+I utilized a robust R-based pipeline to process the massive scale of the Divvy dataset:
+* **Libraries:** `tidyverse` (dplyr, ggplot2), `skimr` (distribution analysis), `DescTools` (statistical profiling), and `pivottabler` (business-grade reporting).
+* **Data Pipeline:** * Consistently merged 12 individual CSV files into a unified dataframe.
+    * Executed data validation to remove negative trip durations and maintenance pings.
+    * Engineered temporal features (Season, Day of Week, Month) to isolate seasonality trends.
 
-### Insights
-1. Casual users ride in average 28% less than users with a membership
-2. Casual users ride in average 2.2 times more than users with membership.
-3. Electric bikes are slightly more popular than classic bikes for casual users, while the opposite is true for users with annual membership.
-4. Casual users use *cyclistic* bikes with more frequency during the weekends, but still it is less than users with a member ship.
-5. Regardless the day of the week, casual users ride in average longer than members. The ride duration is higher during the weekends.
-6. Average ride length for Member users during week days is constant (close to 13.13 minute overall average), suggesting that members use the bikes as a mean of transportation to ride fixed distances, for instance committing to work or school.
-7. Spring and Summer are the seasons with most number of rides for both types of users.
-### **Recommendations**
-- To run the user conversion campaigns during the weekends, specially on Saturdays, where most of the casual users are using the *Cyclistic* bikes.
-- Spring and Summer are the seasons where most users, casual and members, use *Cyclistic* services. It is the best time to do the marketing campaign outside and close to the stations.
-- As casual users make longer bike rides for leisure on average, the campaign should put emphasis on:
-  - The benefits of a membership from a cost per minute perspective compared to the single casual use. 
-  - The reduced cost for electric bikes compared to the single casual cost.
-  - The benefits of using the bike as a regular mean of transportation, not only to keep healthy habits, but also for economic reasons.
+---
 
-### **Further Analysis**
-It would be worthy to spend time analyzing the stations and their closeness to places of interest and see the difference between casual and membership users. 
+## The Growth Roadmap (Recommendations)
+
+* **Weekend Warrior Conversion:** Launch digital ad-buys specifically on weekends, targeting users who take multiple trips on Saturdays/Sundays with "Introductory Annual Rates."
+* **Cost-Per-Minute Marketing:** Create a campaign highlighting that for rides over 20 minutes (the Casual average), an annual membership is significantly more cost-effective than single-trip pricing.
+* **Electric Bike Incentives:** Introduce "Member-Only" discounts or priority access for the Electric Bike fleet to convert hardware-motivated Casual riders.
+* **Seasonal Aggression:** Focus 60% of the marketing budget on the **Summer** months, as usage data shows this is the highest acquisition window for both segments.
+
+---
+
+## Project Structure
+* [**View Full Analysis (HTML)**](Cyclistic.html) - Detailed technical report and interactive visuals.
+* [**Source Code (Rmd)**](Cyclistic.Rmd) - Full R script for data cleaning and analysis.
+* `/data`: Contains a [reduced dataset](./data/reduced_data.zip) for local testing and reproducibility.
+
+> **Data Source:** Original trip data provided by Motivate International Inc. under this [license](https://divvybikes.com/data-license-agreement).
+
+---
+
+## 🔍 Further Analysis
+A strategic next step would be a **Geospatial Analysis** to map specific high-traffic stations for Casual riders. Identifying if these stations are primarily near parks or tourist landmarks would allow for even more localized, physical marketing activations.
