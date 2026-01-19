@@ -15,6 +15,7 @@ library(skimr)
 library(DescTools)
 library(pivottabler)
 library(ggplot2)
+library(lubridate)
 library(here)
 ```
 ## **Introduction**
@@ -50,7 +51,7 @@ Instead of using spreadsheets to process each individual CSV file, these files h
 
 ```{r import_data, message=FALSE, warning=FALSE}
 #import data
-csv_files <- list.files(path = "./data", pattern = "*.csv", full.names = TRUE)
+csv_files <- list.files(path = "./data/raw", pattern = "*.csv", full.names = TRUE)
 combined_data <- readr::read_csv(csv_files, id = "file_name")
 ```
 ```{r glimpse, warning=FALSE}
@@ -67,8 +68,6 @@ If you're running this notebook on your own machine and **don't have the origina
 ```{r load-reduced-data, eval=FALSE, include=FALSE}
 library(here)
 data <- read.csv(here("data", "reduced_data.csv"))
-data$started_at = ymd_hms(data$started_at)
-data$ended_at = ymd_hms(data$ended_at)
 glimpse(data)
 ```
 
@@ -103,10 +102,9 @@ With a smaller dataframe, some useful columns have been added to help with this 
 ```{r add_cols}
 data <- data %>%
   mutate(duration = as.numeric(ended_at - started_at)/60) %>% # cast as numeric to be able to run calculations
-  mutate(day_of_the_week = weekdays(started_at)) %>% 
-  mutate(month = format(as.Date(started_at), "%b"))
+  mutate(day_of_the_week = weekdays(started_at)) %>%
+  mutate(month = month(started_at, label = TRUE, abbr = TRUE))
 ```
-
 
 
 Some formatting is needed in some columns. <span style="color: blue;">**`days_of_the week`**</span> and <span style="color: blue;">**`month`**</span> need to be ordered (Note that the oldest data is from March 2023).
@@ -117,9 +115,6 @@ Also the column <span style="color: blue;">**`member_casual`**</span> need to be
 data$day_of_the_week <- 
   ordered(data$day_of_the_week,
           levels=c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
-data$month <- 
-  ordered(data$month, 
-          levels=c("Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"))
 data$member_casual <- as.factor(data$member_casual)
 ```
 
@@ -128,7 +123,7 @@ data$member_casual <- as.factor(data$member_casual)
 
 #### *Missing data*
 
-Next, the data frame has been check for missing values:
+Next, the data frame has been checked for missing values:
 ```{r}
 data %>% skim_without_charts() %>%
   dplyr::filter(n_missing > 0)
@@ -186,6 +181,7 @@ data_clean <- filter(data, !(duration < 0))
 ```{r}
 data_clean <- filter(data_clean, !((start_station_name == end_station_name) & duration <= 3))
 ```
+
 
 A final check of the data is performed:
 ```{r}
@@ -332,19 +328,18 @@ ggplot(rides_per_month_pivot, aes(x = month, y = average_duration, fill = member
 
 ### **Insighs**
 
-1. Casual users ride in average 28% less than users with a membership
+1. Casual users have a 28% lower total ride count, but their average ride duration is 2.2x longer than members.
 ```{r eval=FALSE, include=FALSE}
 rides_per_user_pivot$n_rides_pct[2]-rides_per_user_pivot$n_rides_pct[1]
 ``` 
-2. Casual users ride in average 2.2 times more than users with membership.
 ```{r eval=FALSE, include=FALSE}
 rides_per_user_pivot$average_duration[1]/rides_per_user_pivot$average_duration[2]
 ``` 
-3. Electric bikes are slightly more popular than classic bikes for casual users, while the opposite is true for users with annual membership.
-4. Casual users use *cyclistic* bikes with more frequency during the weekends, but still it is less than users with a member ship.
-5. Regardless the day of the week, casual users ride in average longer than members. The ride duration is higher during the weekends.
-6. Average ride length for Member users during week days is constant (close to 13.13 minute overall average), suggesting that members use the bikes as a mean of transportation to ride fixed distances, for instance committing to work or school.
-7. Spring and Summer are the seasons with most number of rides for both types of users.
+2. Electric bikes are slightly more popular than classic bikes for casual users, while the opposite is true for users with annual membership.
+3. Casual users use *cyclistic* bikes with more frequency during the weekends, but still it is less than users with a member ship.
+4. Regardless the day of the week, casual users ride in average longer than members. The ride duration is higher during the weekends.
+5. Average ride length for Member users during week days is constant (close to 13.13 minute overall average), suggesting that members use the bikes as a mean of transportation to ride fixed distances, for instance committing to work or school.
+6. Spring and Summer are the seasons with most number of rides for both types of users.
 
 
 ## 🚀 **Act**
