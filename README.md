@@ -4,7 +4,7 @@
 ---
 
 ## Executive Summary
-Cyclistic's long-term profitability depends on transitioning "Casual" riders into "Annual Members." By analyzing 12 months of historical trip data (approx. 5.5M+ records), this project identifies key behavioral pivots.
+Cyclistic's long-term profitability depends on transitioning "Casual" riders into "Annual Members." By analyzing 12 months of historical trip data, this project identifies key behavioral pivots.
 
 The most significant finding: Casual riders average **29.41 minutes** per trip—over 2x the duration of Members—presenting a massive opportunity for value-based conversion.
 
@@ -73,5 +73,5 @@ I utilized a robust R-based pipeline to process the massive scale of the Divvy d
 
 ---
 
-## 🔍 Further Analysis
+## Further Analysis
 A strategic next step would be a **Geospatial Analysis** to map specific high-traffic stations for Casual riders. Identifying if these stations are primarily near parks or tourist landmarks would allow for even more localized, physical marketing activations.
